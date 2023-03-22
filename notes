@@ -1,0 +1,8 @@
+const controls = new OrbitControls(camera, renderer.domElement);
+const orbit = new OrbitControls(camera, renderer.domElement);
+orbit.target = new THREE.Vector3(0,0,0); // set the center
+orbit.maxPolarAngle =  Math.PI/2; // prevent the camera from going under the ground
+orbit.minDistance = 8; // the minimum distance the camera must have from center
+orbit.maxDistance = 15; // the maximum distance the camera must have from center
+orbit.zoomSpeed = 0.3; // control the zoomIn and zoomOut speed
+orbit.rotateSpeed = 0.3; // control the rotate speed
