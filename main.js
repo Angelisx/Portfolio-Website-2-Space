@@ -25,14 +25,14 @@ camera.position.setX(0);
 camera.position.setY(5);
 camera.lookAt(scene.position);
 
-
+const spaceTexture = new THREE.TextureLoader().load('space.jpg');
+scene.background = spaceTexture;
 
 
 const controls = new OrbitControls (camera, renderer.domElement);
 // newcamera.addEventListener( 'change', animate );
 
-controls.autoRotate = true;
-controls.enabled = false
+controls.enabled = true
 
 controls.maxPolarAngle = Math.PI / 2;
 
