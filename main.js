@@ -88,17 +88,23 @@ function onWindowResize( event ) {
     
 }
 
-function animate() {
-  requestAnimationFrame(animate);
-  // group.rotation += 0.005;
 
+function Cameraspin(){
   controls.update();
+  
   controls.autoRotate = true;
   controls.autoRotateSpeed = -2
 
 
+}
 
+function animate() {
+  requestAnimationFrame(animate);
+  // group.rotation += 0.005;
+  setTimeout(Cameraspin,1000);
   renderer.render(scene, camera);
 }
+
+
 
 animate();
