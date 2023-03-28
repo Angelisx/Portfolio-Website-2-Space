@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import Stats from "three/addons/libs/stats.module.js";
-import { TWEEN } from 'three/examples/jsm/libs/tween.module.min'
+import * as TWEEN from '@tweenjs/tween.js';
 
 
 let container;
@@ -12,10 +12,12 @@ let camera, scene, raycaster, renderer,delta;
 
 const pointer = new THREE.Vector2();
 const radius = 100;
+let updateControls = true;
 
 init();
 function init() {
   const clock = new THREE.Clock();
+
 
   // Set up camera and scene
   scene = new THREE.Scene();
@@ -41,6 +43,7 @@ function init() {
   document.body.appendChild(container);
   container.appendChild(renderer.domElement);
   window.addEventListener("resize", onWindowResize);
+
 }
 
 function planetclicker() {
@@ -68,8 +71,23 @@ function planetclicker() {
     if (intersects.length > 0) {
       // user clicked on the planet, animate camera to move towards the planet
       console.log('it clicks')
-      window.location.href = 'planet.html';
+      
+      updateControls = false;
 
+      const targetPosition = planet.position
+      const startPosition = camera.position
+      const tween = new TWEEN.Tween(startPosition)
+      .to(targetPosition, 2000)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .onUpdate(() => {
+        camera.position.copy(startPosition);
+        camera.lookAt(planet.position);
+      })
+      .onComplete(() => {
+        // transition to different page after camera animation is complete
+        window.location.href = 'planet1.html';
+      })
+      .start();
     }
   }
 }
@@ -87,12 +105,15 @@ const planet = new THREE.Mesh(geometry,material);
 planet.position.set(3.8, 4.3, 0);
 scene.add(planet);
 
-//spaceTexture
+
+
+
+
 
 
 // orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.enabled = true;
+controls.enabled = false;
 controls.maxPolarAngle = Math.PI / 2;
 
 
@@ -119,8 +140,6 @@ loader.load(
 
 
 // //helpers
-;
-
 function helpers() {
   const lighthelper = new THREE.PointLightHelper(pointlight);
   const gridhelper = new THREE.GridHelper(200, 50);
@@ -135,8 +154,9 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 function Cameraspin() {
-  controls.update();
-
+  if (updateControls) {
+    controls.update();
+  }
   controls.autoRotate = true;
   controls.autoRotateSpeed = -2;
 }
@@ -146,7 +166,7 @@ function animate() {
   setTimeout(Cameraspin, 1000);
   renderer.render(scene, camera);
   planetclicker();
-
+  TWEEN.update();
 }
 
 helpers()
