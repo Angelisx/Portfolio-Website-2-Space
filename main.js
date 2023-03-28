@@ -34,14 +34,18 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.position.set(0, 5, 9);
   camera.lookAt(scene.position);
+  // camera.near = 0.1; // the nearest distance to render
+  // camera.far = 30; // the farthest distance to render
+  camera.updateProjectionMatrix();
 
 
+
+
+  //space background
   const spaceTexture = new THREE.TextureLoader().load("space.jpg");
   scene.background = spaceTexture;
 
-  container = document.createElement("div");
-  document.body.appendChild(container);
-  container.appendChild(renderer.domElement);
+
   window.addEventListener("resize", onWindowResize);
 
 }
@@ -65,27 +69,50 @@ function planetclicker() {
     raycaster.setFromCamera(mouse, camera);
 
     // calculate objects intersecting the picking ray
-    const intersects = raycaster.intersectObjects([planet]);
+    const intersectsProjects = raycaster.intersectObjects([projectsPlanet]);
+    const intersectsContact = raycaster.intersectObjects([contactPlanet]);
 
 
-    if (intersects.length > 0) {
+    if (intersectsProjects.length > 0) {
       // user clicked on the planet, animate camera to move towards the planet
       console.log('it clicks')
       
       updateControls = false;
 
-      const targetPosition = planet.position
+      const targetPosition = projectsPlanet.position
       const startPosition = camera.position
       const tween = new TWEEN.Tween(startPosition)
       .to(targetPosition, 2000)
       .easing(TWEEN.Easing.Quadratic.Out)
       .onUpdate(() => {
         camera.position.copy(startPosition);
-        camera.lookAt(planet.position);
+        camera.lookAt(projectsPlanet.position);
       })
       .onComplete(() => {
         // transition to different page after camera animation is complete
-        window.location.href = 'planet1.html';
+
+        camera.position.set(0, 5, 9);
+      })
+      .start();
+    }
+    if (intersectsContact.length > 0) {
+      // user clicked on the planet, animate camera to move towards the planet
+      console.log('it clicks')
+      
+      updateControls = false;
+
+      const targetPosition = contactPlanet.position
+      const startPosition = camera.position
+      const tween = new TWEEN.Tween(startPosition)
+      .to(targetPosition, 2000)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .onUpdate(() => {
+        camera.position.copy(startPosition);
+        camera.lookAt(contactPlanet.position);
+      })
+      .onComplete(() => {
+        // transition to different page after camera animation is complete
+        window.location.href = 'ContactPlanet.html';
       })
       .start();
     }
@@ -96,14 +123,17 @@ function planetclicker() {
 
 
 
+//objects
+const transparentmaterial = new THREE.MeshPhongMaterial({ color: 0x000000 ,transparent: true, opacity: 0,});
+const geometry = new THREE.SphereGeometry(0.5, 32, 16, true);
+const material = new THREE.MeshPhongMaterial({ color: 0x000000 ,transparent: true, opacity: 1,  side: THREE.DoubleSide});
+const projectsPlanet = new THREE.Mesh(geometry,material);
+const contactPlanet = new THREE.Mesh(geometry,transparentmaterial);
 
+projectsPlanet.position.set(3.8, 4.3, 0);
+contactPlanet.position.set(-3.6, 3.9, 0);
 
-
-const geometry = new THREE.SphereGeometry(0.5, 32, 16);
-const material = new THREE.MeshStandardMaterial({ color: 0xae15d4 });
-const planet = new THREE.Mesh(geometry,material);
-planet.position.set(3.8, 4.3, 0);
-scene.add(planet);
+scene.add(contactPlanet,projectsPlanet);
 
 
 
@@ -113,7 +143,7 @@ scene.add(planet);
 
 // orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.enabled = false;
+controls.enabled = true;
 controls.maxPolarAngle = Math.PI / 2;
 
 
@@ -139,7 +169,7 @@ loader.load(
 
 
 
-// //helpers
+//helpers
 function helpers() {
   const lighthelper = new THREE.PointLightHelper(pointlight);
   const gridhelper = new THREE.GridHelper(200, 50);
@@ -157,7 +187,7 @@ function Cameraspin() {
   if (updateControls) {
     controls.update();
   }
-  controls.autoRotate = true;
+  controls.autoRotate = false;
   controls.autoRotateSpeed = -2;
 }
 function animate() {
