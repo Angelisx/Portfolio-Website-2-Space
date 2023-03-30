@@ -2,4 +2,30 @@ canvas{
   position:fixed;
   top: 0;
   left: 0;
+  z-index: 0;
+  
+}
+
+.hidden {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+main{
+  color: aliceblue;
+  z-index: 1;
+  position: absolute;
+  pointer-events: none;
+
+}
+footer{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: left;
+  font-size: 9px;
+  pointer-events: none;
+}
+html{
+  cursor: url('assets/images/cursor-hover.svg'), auto;
 }
