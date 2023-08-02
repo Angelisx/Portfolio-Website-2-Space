@@ -13,14 +13,14 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
 
 
-let container;
+let container, audio ;
 let camera, scene, raycaster, renderer, delta;
 
 let updateControls = true;
 
 //3d model
-const loader = new GLTFLoader();
-loader.load(
+const spaceguy = new GLTFLoader();
+spaceguy.load(
   "assets/space_boi/test models/something/spaceman3.gltf",
   function (gltf) {
     const spaceMan = gltf.scene;
@@ -39,6 +39,42 @@ loader.load(
     console.error(error);
   }
 );
+
+// const blackholeloader = new GLTFLoader();
+// let blackhole;
+// blackholeloader.load(
+//   "assets/blackhole/blackhole.gltf",
+//   function (gltf) {
+//     blackhole = gltf.scene;
+//     scene.add(blackhole);
+//     // blackhole.position.set(31, 5, 9);
+//     blackhole.scale.set(3, 3, 2);
+//     blackhole.rotation.set(0,0,10);
+
+//     const boundingBox = new THREE.Box3().setFromObject(blackhole);
+//     const center = boundingBox.getCenter(new THREE.Vector3());
+  
+//     // Set pivot point to the center of the bounding box
+//     blackhole.position.set(-center.x, -center.y, -center.z);
+  
+//     const tiltAngle = 23.5 * (Math.PI / 180);
+//     blackhole.rotation.x = tiltAngle;
+
+
+//     blackhole.traverse(function(child) {
+//       if (child.isMesh) {
+//         child.material.opacity = 1;
+//         child.material.transparent = true;
+//         }
+//     });
+//   },
+//   undefined,
+//   function (error) {
+//     console.error(error);
+//   }
+// );
+
+
 
 
 init();
@@ -63,8 +99,8 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.position.set(0, 8, 12);
   camera.lookAt(scene.position);
-  // camera.near = 0.1; // the nearest distance to render
-  // camera.far = 30; // the farthest distance to render
+  camera.near = 0.1; // the nearest distance to render
+  camera.far = 25; // the farthest distance to render
   camera.updateProjectionMatrix();
 
   //space background
@@ -117,7 +153,7 @@ function planetclicker() {
 
           camera.position.set(30, 5, 9);
           controls.target.copy(camera.position);
-          camera.position.set(30, 5, 14);
+          camera.position.set(29, 5, 16.5);
           updateControls = true;
 
           fade();
@@ -154,11 +190,7 @@ function planetclicker() {
       let audio = new Audio("assets/sound/HeartBeat_Loop_120bpm.mp3"); 
       audio.volume = 0.01;
       audio.play();
-      
-      audio.addEventListener('loadedmetadata', function() {
-
-      console.log(audio.duration);
-    });
+    
       console.log("it clicks");
       updateControls = false;
      
@@ -189,6 +221,11 @@ function planetclicker() {
 
 
 
+const homeButton = document.getElementById('homecamera');
+homeButton.addEventListener('click', () => {
+  camera.position.set(0, 8, 12);
+  controls.target.copy(scene.position);
+});
 function addStar() {
   const stargeometry = new THREE.SphereGeometry(0.025, 24, 24);
   const starmaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
@@ -202,6 +239,22 @@ function addStar() {
   scene.add(star);
 }
 Array(1000).fill().forEach(addStar);
+
+function music(){
+  let audio = new Audio("assets/sound/Ed_Edd_n_Eddy_Theme_Song.mp3"); 
+  audio.volume = 1;
+  audio.play();
+  const toggleButton = document.getElementById('toggle-audio');
+  
+  toggleButton.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  });
+}
+// music();
 
 
 
@@ -272,16 +325,29 @@ function Cameraspin() {
     controls.update();
   }
   controls.autoRotate = true;
-  controls.autoRotateSpeed = -2;
+  controls.autoRotateSpeed = -1;
 }
 function animate() {
   requestAnimationFrame(animate);
-  // setTimeout(Cameraspin, 2000);
-  // Cameraspin();
-  renderer.render(scene, camera);
+  setTimeout(Cameraspin, 2000);
+  Cameraspin();
   planetclicker();
   TWEEN.update();
-  
+  // mixer.update(0.01);
+
+  // Rotate the model
+  // blackhole.rotation.y += 0.01;
+  // if (blackhole) {
+  //   blackhole.rotation.y += 0.001;
+  //   // blackhole.rotation.z += 0.1;
+
+
+
+
+  // }
+
+
+  renderer.render(scene, camera);
 }
 
 

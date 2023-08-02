@@ -29,3 +29,23 @@ footer{
 html{
   cursor: url('assets/images/cursor-hover.svg'), auto;
 }
+
+#toggle-audio{
+  position: fixed;
+  bottom: 5px;
+  right: 5px; 
+  color: white;   
+  pointer-events: all;
+
+}
+button{
+  pointer-events: all;
+}
+
+.toggle-audio svg {
+  width: 24px;
+  height: 24px;
+  stroke: #000;
+  stroke-width: 2;
+
+}

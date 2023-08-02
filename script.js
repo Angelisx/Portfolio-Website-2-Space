@@ -1,4 +1,3 @@
-import "./style.css";
 
 function fade() {
   var section1 = document.getElementById("section1");
@@ -13,3 +12,5 @@ function fade() {
   }, 1000);
 }
 export { fade };
+
+
