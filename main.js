@@ -1,3 +1,7 @@
+
+
+import space_sound from './assets/sound/space-ambience-56265.mp3';
+
 import "./style.css";
 import { fade } from "./script.js";
 
@@ -108,7 +112,11 @@ function init() {
 
   window.addEventListener("resize", onWindowResize);
 }
-
+function playHeartbeatAudio() {
+  let Avatar_audio = new Audio("assets/sound/HeartBeat_Loop_120bpm.mp3"); 
+  Avatar_audio.volume = 0.001;
+  Avatar_audio.play();
+}
 function planetclicker() {
   // assuming you have a planet mesh called 'planet'
 
@@ -132,12 +140,13 @@ function planetclicker() {
     const intersectsContact = raycaster.intersectObjects([contactPlanet]);
     const intersectsAvatar = raycaster.intersectObjects([AvatarBox]);
 
+
     if (intersectsProjects.length > 0) {
       // user clicked on the planet, animate camera to move towards the planet
       console.log("it clicks");
       updateControls = false;
-
-
+  
+      
       const targetPosition = projectsPlanet.position;
       const startPosition = camera.position;
       const tween = new TWEEN.Tween(startPosition)
@@ -149,23 +158,22 @@ function planetclicker() {
         })
         .onComplete(() => {
           // transition to different page after camera animation is complete
-
+  
           camera.position.set(30, 5, 9);
           controls.target.copy(camera.position);
           camera.position.set(29, 5, 16.5);
           updateControls = true;
-
+  
           fade();
         })
         .start();
     }
-
     if (intersectsContact.length > 0) {
       // user clicked on the planet, animate camera to move towards the planet
       console.log("it clicks");
-
+      
       updateControls = false;
-
+        
       const targetPosition = contactPlanet.position;
       const startPosition = camera.position;
       const tween = new TWEEN.Tween(startPosition)
@@ -179,20 +187,18 @@ function planetclicker() {
           // transition to different page after camera animation is complete
           camera.position.set(30, 5, 9);
           fade();
-
+    
         })
         .start();
     }
     if (intersectsAvatar.length > 0) {
       // user clicked on the planet, animate camera to move towards the planet
       
-      let audio = new Audio("assets/sound/HeartBeat_Loop_120bpm.mp3"); 
-      audio.volume = 0.01;
-      audio.play();
+      playHeartbeatAudio();
     
       console.log("it clicks");
       updateControls = false;
-     
+      
       const targetPosition = AvatarBox.position;
       const startPosition = camera.position;
       const tween = new TWEEN.Tween(startPosition)
@@ -204,27 +210,35 @@ function planetclicker() {
         })
         .onComplete(() => {
           // transition to different page after camera animation is complete
-
+    
           camera.position.set(30, 5, 9);
           controls.target.copy(camera.position);
           camera.position.set(30, 5, 14);
           updateControls = true;
-
+    
           fade();
         })
         .start();
     }
+    
+
+   
   }
+  
+
+  
 }
 
 
-
-
-const homeButton = document.getElementById('homecamera');
-homeButton.addEventListener('click', () => {
+function homebutton() {
+  const homeButton = document.getElementById('homecamera');
+  homeButton.addEventListener('click', () => {
   camera.position.set(0, 8, 12);
   controls.target.copy(scene.position);
-});
+  });
+
+}
+homebutton();
 function addStar() {
   const stargeometry = new THREE.SphereGeometry(0.025, 24, 24);
   const starmaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
@@ -240,20 +254,20 @@ function addStar() {
 Array(1000).fill().forEach(addStar);
 
 function music(){
-  let audio = new Audio("assets/sound/Ed_Edd_n_Eddy_Theme_Song.mp3"); 
-  audio.volume = 1;
-  audio.play();
+  let background_music = new Audio(space_sound); 
+  background_music.volume = 0.10;
+  background_music.play();
   const toggleButton = document.getElementById('toggle-audio');
   
   toggleButton.addEventListener('click', () => {
-    if (audio.paused) {
-      audio.play();
+    if (background_music.paused) {
+      background_music.play();
     } else {
-      audio.pause();
+      background_music.pause();
     }
   });
 }
-// music();
+music();
 
 
 
