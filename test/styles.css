@@ -1,0 +1,49 @@
+/* Styles for the preloader */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Hide overflow until preloader is removed */
+    
+  }
+  h1{
+    color: red;
+  }
+
+  .preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black; /* Background color of the preloader */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it's on top of everything */
+  }
+  
+  .spinner {
+    border: 4px solid #f3f3f3; /* Light grey border */
+    border-top: 4px solid red; /* red border for spinning animation */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite; /* Spin animation */
+  }
+  
+  /* Spin animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Hide the main content until preloader is hidden */
+  .main-content {
+    display: none;
+  }
+  
+  /* Show main content when preloader is hidden */
+  .loaded .main-content {
+    display: block;
+  }
+  
