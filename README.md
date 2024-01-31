@@ -41,7 +41,6 @@ To explore my Space Software Engineer Portfolio:
 
 ## About Me
 
-I'm Angel, the visionary behind this portfolio. I'm a passionate software engineer with a keen interest in space exploration and technology. With a background in web development and a love for all things celestial, I strive to create digital experiences that inspire awe and curiosity about the universe.
 
 ## Contact
 
