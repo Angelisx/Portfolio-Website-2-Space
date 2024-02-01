@@ -1,6 +1,6 @@
 
 
-import space_sound from './assets/sound/space-ambience-56265.mp3';
+import space_sound from '/assets/sound/space-ambience-56265.mp3';
 import "./style.css";
 import { fade } from "./script.js";
 import * as THREE from "three";
