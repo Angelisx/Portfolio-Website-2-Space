@@ -28,6 +28,7 @@ footer{
 }
 html{
   cursor: url('assets/images/cursor-hover.svg'), auto;
+  
 }
 
 #toggle-audio{
@@ -36,8 +37,13 @@ html{
   right: 5px; 
   color: white;   
   pointer-events: all;
+  width: 50px; /* Adjust width and height as needed */
+  height: 50px;
+  background-image: url('assets/images/172512_mute_icon.svg');
 
 }
+
+
 button{
   pointer-events: all;
 }
@@ -52,7 +58,7 @@ button{
 
 
 /* CSS */
-#homecamera {
+#home_button {
   align-items: center;
   background-image: linear-gradient(144deg,#AF40FF, #000000 50%,#00DDEB);
   border: 0;
@@ -86,7 +92,7 @@ button:hover {
 
 }
 
-#homecamera span {
+#home_button span {
   background-color: rgb(5, 6, 45);
   padding: 16px 24px;
   border-radius: 6px;
@@ -95,12 +101,12 @@ button:hover {
   transition: 300ms;
 }
 
-#homecamera:hover span {
+#home_button:hover span {
   background: none;
 }
 
 @media (min-width: 768px) {
-  .homecamera {
+  .home_button {
     font-size: 24px;
     min-width: 196px;
   }
