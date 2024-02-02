@@ -1,6 +1,6 @@
 
 
-import space_sound from '/assets/sound/space-ambience-56265.mp3';
+import space_sound from '/assets/Sound/space-ambience-56265.mp3';
 import "./style.css";
 import { fade } from "./script.js";
 import * as THREE from "three";
@@ -73,8 +73,6 @@ spaceguy.load(
 // );
 
 
-
-
 init();
 function init() {
   const clock = new THREE.Clock();
@@ -109,7 +107,7 @@ function init() {
 }
 function playHeartbeatAudio() {
   let Avatar_audio = new Audio("assets/sound/HeartBeat_Loop_120bpm.mp3"); 
-  Avatar_audio.volume = 0.5;
+  Avatar_audio.volume = 0.09;
   Avatar_audio.play();
 }
 function planetclicker() {
@@ -277,8 +275,8 @@ function music(){
     }
   });
 }
-music();
 
+music();
 
 
 //objects
@@ -361,8 +359,8 @@ function animate() {
   // Rotate the model
   // blackhole.rotation.y += 0.01;
   // if (blackhole) {
-  //   blackhole.rotation.y += 0.001;
-  //   // blackhole.rotation.z += 0.1;
+  //   blackhole.rotation.y += 3;
+  //   blackhole.rotation.z += 3;
 
 
 
@@ -373,6 +371,15 @@ function animate() {
   renderer.render(scene, camera);
 }
 
+window.addEventListener('load', function() {
+  // Add a delay of 1000 milliseconds (1 second) before hiding the loading screen
+  setTimeout(function() {
+    // Hide the loading screen after the delay
+    document.getElementById('loading-screen').style.display = 'none';
+    // Show the background (assuming it has the ID 'bg')
+    document.getElementById('bg').style.display = 'block';
+  }, 1000); // Adjust the delay time as needed
+});
 
 
 

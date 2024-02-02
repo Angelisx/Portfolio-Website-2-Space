@@ -31,6 +31,12 @@ html{
   
 }
 
+
+#loading-screen{
+  color: black;
+}
+
+
 #toggle-audio{
   position: fixed;
   bottom: 5px;
@@ -55,6 +61,7 @@ button{
   stroke-width: 2;
 
 }
+
 
 
 /* CSS */
