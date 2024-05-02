@@ -6,31 +6,27 @@ import { fade } from "./script.js";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import Stats from "three/addons/libs/stats.module.js";
 import * as TWEEN from "@tweenjs/tween.js";
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
-let container, audio ;
+
 let camera, scene, raycaster, renderer, delta;
 let updateControls = true;
 
 //3d model
 const spaceguy = new GLTFLoader();
-spaceguy.load(
+spaceguy.load(  
   "assets/space_boi/test models/something/spaceman3.gltf",
   function (gltf) {
     const spaceMan = gltf.scene;
     scene.add(spaceMan);
 
 
-    spaceMan.traverse(function(child) {
-      if (child.isMesh) {
-        child.material.opacity = 1;
-        child.material.transparent = true;
-        }
-    });
+    // spaceMan.traverse(function(child) {
+    //   if (child.isMesh) {
+    //     child.material.opacity = 1;
+    //     child.material.transparent = true;
+    //     }
+    // });
   },
   undefined,
   function (error) {
@@ -88,7 +84,7 @@ function init() {
   renderer = new THREE.WebGL1Renderer({
     canvas: document.querySelector("#bg"),
   });
-
+  
 
 
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -120,7 +116,7 @@ function planetclicker() {
   renderer.domElement.addEventListener("click", onMouseClick, false);
 
   function onMouseClick(event) {
-    // calculate mouse position in normalized device coordinates
+    // calculate mouse position in normalized device coordinates  
     const mouse = {
       x: (event.clientX / renderer.domElement.clientWidth) * 2 - 1,
       y: -(event.clientY / renderer.domElement.clientHeight) * 2 + 1,
@@ -251,7 +247,7 @@ function addStar() {
   star.position.set(x, y, z);
   scene.add(star);
 }
-Array(1000).fill().forEach(addStar);
+Array(1).fill().forEach(addStar);
 
 
 
@@ -276,7 +272,7 @@ function music(){
   });
 }
 
-music();
+// music();
 
 
 //objects
@@ -320,6 +316,8 @@ scene.add(group);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enabled = true;
 controls.maxPolarAngle = Math.PI / 2;
+controls.enableZoom =false
+controls.enableDamping = true;
 
 
 //light source
@@ -376,9 +374,12 @@ window.addEventListener('load', function() {
   setTimeout(function() {
     // Hide the loading screen after the delay
     document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById('section1').style.display = 'block';
+
+
     // Show the background (assuming it has the ID 'bg')
     document.getElementById('bg').style.display = 'block';
-  }, 1000); // Adjust the delay time as needed
+  }, 2000); // Adjust the delay time as needed
 });
 
 

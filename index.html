@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/assets/images/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Angel Smythe</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.js" 
-    integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Angel Smythe</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
-    <script type="text/javascript" src="script.js"></script>
-    <script type="module" src="main.js"></script>
-  </head>
-  <body>
+  <script type="module" src="script.js"></script>
+  <script type="module" src="main.js"></script>
+</head>
 
-    <div id="loading-screen">
-      LOAding
-    </div>
+<body>
 
-    <!-- 3d canvas -->
-    <div>
-      <canvas id="bg" style="display: none;" ></canvas>
-    </div>
+  <div class="middle" id="loading-screen">
+    <div class="bar bar1"></div>
+    <div class="bar bar2"></div>
+    <div class="bar bar3"></div>
+    <div class="bar bar4"></div>
+    <div class="bar bar5"></div>
+    <div class="bar bar6"></div>
+    <div class="bar bar7"></div>
+    <div class="bar bar8"></div>
+  </div>
 
-    
-    <!-- Navigation bar
+  <!-- 3d canvas -->
+  <div>
+    <canvas id="bg" style="display: none;"></canvas>
+  </div>
+
+
+  <!-- Navigation bar
     -->
-     <main>
+  <main>
     <div id="section1">
       <nav class="hidden">
         <ul>
@@ -45,7 +53,7 @@
 
       </header>
     </div>
-   
+
 
     <!-- About section -->
 
@@ -76,24 +84,25 @@
     <!-- Contact section -->
     <div>
       <section id="contact" class="hidden">
-      <h2>Contact Me</h2>
-      <form>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" />
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" />
-        <label for="message">Message:</label>
-        <textarea id="message" name="message"></textarea>
-        <input type="submit" value="Send" />
-      </form>
+        <h2>Contact Me</h2>
+        <form>
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" />
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" />
+          <label for="message">Message:</label>
+          <textarea id="message" name="message"></textarea>
+          <input type="submit" value="Send" />
+        </form>
       </section>
 
-       <button id="toggle-audio">
-        </button>
+      <button id="toggle-audio">
+      </button>
       <footer>
         <p>&copy; 2024 Angel Smythe</p>
       </footer>
     </div>
   </main>
-  </body>
+</body>
+
 </html>
