@@ -75,11 +75,7 @@ function init() {
 
   // Set up camera and scene
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
+  camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight,0.1,1000
   );
   renderer = new THREE.WebGL1Renderer({
     canvas: document.querySelector("#bg"),
@@ -89,10 +85,10 @@ function init() {
 
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
-  camera.position.set(0, 8, 12);
+  camera.position.set(0, 7, 13  );
   camera.lookAt(scene.position);
   camera.near = 0.1; // the nearest distance to render
-  camera.far = 25; // the farthest distance to render
+  camera.far = 50; // the farthest distance to render
   camera.updateProjectionMatrix();
 
   //space background
