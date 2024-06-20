@@ -9,7 +9,7 @@ function fade() {
   // Fade in section 2 after a short delay
   setTimeout(function () {
     section2.classList.remove("hidden");
-  }, 1000);
+  }, 2500);
 }
 export { fade };
 

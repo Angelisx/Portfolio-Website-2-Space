@@ -130,7 +130,8 @@ function planetclicker() {
       // user clicked on the planet, animate camera to move towards the planet
       console.log("it clicks");
       updateControls = false;
-  
+      fade();
+
       
       const targetPosition = projectsPlanet.position;
       const startPosition = camera.position;
@@ -149,14 +150,14 @@ function planetclicker() {
           camera.position.set(29, 5, 16.5);
           updateControls = true;
   
-          fade();
         })
         .start();
     }
     if (intersectsContact.length > 0) {
       // user clicked on the planet, animate camera to move towards the planet
       console.log("it clicks");
-      
+      fade();
+
       updateControls = false;
         
       const targetPosition = contactPlanet.position;
@@ -171,7 +172,6 @@ function planetclicker() {
         .onComplete(() => {
           // transition to different page after camera animation is complete
           camera.position.set(30, 5, 9);
-          fade();
     
         })
         .start();
@@ -180,7 +180,8 @@ function planetclicker() {
       // user clicked on the planet, animate camera to move towards the planet
       
       playHeartbeatAudio();
-    
+      fade();
+
       console.log("it clicks");
       updateControls = false;
       
@@ -201,7 +202,6 @@ function planetclicker() {
           camera.position.set(30, 5, 14);
           updateControls = true;
     
-          fade();
         })
         .start();
     }
@@ -231,19 +231,19 @@ function homebutton() {
 }
 homebutton();
 
-function addStar() {
-  const stargeometry = new THREE.SphereGeometry(0.025, 24, 24);
-  const starmaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
-  const star = new THREE.Mesh(stargeometry, starmaterial);
+// function addStar() {
+//   const stargeometry = new THREE.SphereGeometry(0.025, 24, 24);
+//   const starmaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+//   const star = new THREE.Mesh(stargeometry, starmaterial);
 
-  const [x, y, z] = Array(3)
-    .fill()
-    .map(() => THREE.MathUtils.randFloatSpread(100));
+//   const [x, y, z] = Array(3)
+//     .fill()
+//     .map(() => THREE.MathUtils.randFloatSpread(100));
 
-  star.position.set(x, y, z);
-  scene.add(star);
-}
-Array(1).fill().forEach(addStar);
+//   star.position.set(x, y, z);
+//   scene.add(star);
+// }
+// Array(1).fill().forEach(addStar);
 
 
 
