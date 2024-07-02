@@ -1,0 +1,1 @@
+add hyperspeed effect when traveling to the planets
