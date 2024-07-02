@@ -44,7 +44,7 @@ To explore my Space Software Engineer Portfolio:
 
 ## Contact
 
-To connect with me or inquire about collaboration opportunities, please reach out via email at [angel@example.com](mailto:angel@example.com) or through my LinkedIn profile.
+To connect with me or inquire about collaboration opportunities, please reach out via email at [angel@example.com](mailto:angeljsmythe@gmail.com) or through my LinkedIn profile.
 
 ## Acknowledgments
 
