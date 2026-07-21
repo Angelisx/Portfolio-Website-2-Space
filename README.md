@@ -41,6 +41,11 @@ To explore my Space Software Engineer Portfolio:
 
 ## About Me
 
+I'm Angel Smythe, a web developer who likes building things that feel a little
+more alive than the average page — interactive 3D scenes, small game-like
+touches, and interfaces that reward a bit of curiosity. Most of my projects
+are deployed on Netlify; you can find links to them in the Projects section
+of this site.
 
 ## Contact
 
