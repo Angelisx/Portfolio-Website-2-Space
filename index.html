@@ -4,18 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/assets/images/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Angel Smythe — Web Developer & Designer. A space-themed portfolio featuring interactive 3D projects." />
     <title>Angel Smythe</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.js" 
-    integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
-    <script type="text/javascript" src="script.js"></script>
     <script type="module" src="main.js"></script>
   </head>
   <body>
 
     <div id="loading-screen">
-      LOAding
+      <div class="spinner"></div>
+      <p>Loading the cosmos&hellip;</p>
     </div>
 
     <!-- 3d canvas -->
@@ -23,77 +21,118 @@
       <canvas id="bg" style="display: none;" ></canvas>
     </div>
 
-    
-    <!-- Navigation bar
-    -->
-     <main>
-    <div id="section1">
-      <nav class="hidden">
+    <main>
+      <!-- Navigation bar -->
+      <nav>
         <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#home" data-target="page-home" class="active">Home</a></li>
+          <li><a href="#about" data-target="page-about">About</a></li>
+          <li><a href="#projects" data-target="page-projects">Projects</a></li>
+          <li><a href="#contact" data-target="page-contact">Contact</a></li>
         </ul>
       </nav>
 
-      <!-- Header section -->
-      <header id="home">
-        <h1>Angel Smythe</h1>
-        <h2>Web Developer & Designer</h2>
-        <p>Explore the planets and find out more</p>
+      <!-- Home section -->
+      <section id="page-home" class="page active">
+        <header>
+          <h1>Angel Smythe</h1>
+          <h2>Web Developer &amp; Designer</h2>
+          <p>Explore the planets above, or use the menu to navigate the cosmos.</p>
+        </header>
+      </section>
 
-      </header>
-    </div>
-   
+      <!-- About section -->
+      <section id="page-about" class="page">
+        <button class="back-button" data-target="page-home">&larr; Home</button>
+        <h2>About Me</h2>
+        <div class="about-content">
+          <p>
+            I'm Angel Smythe, a web developer who likes building things that feel a
+            little more alive than the average page &mdash; interactive 3D scenes,
+            small game-like touches, and interfaces that reward a bit of curiosity.
+          </p>
+          <p>
+            My day-to-day toolkit spans JavaScript, Three.js, and modern frameworks
+            like Next.js, and I deploy most of my projects on Netlify so I can
+            iterate quickly and ship often. This portfolio is itself one of those
+            projects &mdash; equal parts resume and playground.
+          </p>
+          <p>
+            When I'm not shipping side projects, I'm usually chasing down a new
+            idea worth prototyping. Take a look around the Projects section to see
+            a few of them.
+          </p>
+        </div>
+      </section>
 
-    <!-- About section -->
-
-    <!-- Projects section -->
-    <div id="section2" class="hidden">
-      <section id="projects">
-        <button id="home_button">home</button>
-
+      <!-- Projects section -->
+      <section id="page-projects" class="page">
+        <button class="back-button" data-target="page-home">&larr; Home</button>
         <h2>My Projects</h2>
 
-        <ul>
+        <div class="project-grid">
+          <a class="project-card" href="https://angeldashboard.netlify.app" target="_blank" rel="noopener noreferrer">
+            <h3>Angel Dashboard</h3>
+            <p>A personal dashboard app for keeping track of projects at a glance.</p>
+          </a>
 
-          <li>
-            <a href="#">Project 1</a>
-            <p>Description of project 1</p>
-          </li>
-          <li>
-            <a href="#">Project 2</a>
-            <p>Description of project 2</p>
-          </li>
-          <li>
-            <a href="#">Project 3</a>
-            <p>Description of project 3</p>
-          </li>
-        </ul>
-      </section>
-    </div>
-    <!-- Contact section -->
-    <div>
-      <section id="contact" class="hidden">
-      <h2>Contact Me</h2>
-      <form>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" />
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" />
-        <label for="message">Message:</label>
-        <textarea id="message" name="message"></textarea>
-        <input type="submit" value="Send" />
-      </form>
+          <a class="project-card" href="https://effortless-gumdrop-0f0f8d.netlify.app" target="_blank" rel="noopener noreferrer">
+            <h3>Home Front</h3>
+            <p>A home-management app for keeping household tasks organized.</p>
+          </a>
+
+          <a class="project-card" href="https://stately-faloodeh-5bc623.netlify.app" target="_blank" rel="noopener noreferrer">
+            <h3>Stately Faloodeh</h3>
+            <p>A dark-mode dashboard exploring data visualization and layout.</p>
+          </a>
+
+          <a class="project-card" href="https://funstorytime.netlify.app" target="_blank" rel="noopener noreferrer">
+            <h3>Survive the Storm</h3>
+            <p>An interactive story built with Next.js.</p>
+          </a>
+
+          <a class="project-card" href="https://quiet-axolotl-578d06.netlify.app" target="_blank" rel="noopener noreferrer">
+            <h3>Quiet Axolotl</h3>
+            <p>A quick prototype dashboard, shipped straight from Netlify Drop.</p>
+          </a>
+        </div>
       </section>
 
-       <button id="toggle-audio">
-        </button>
+      <!-- Contact section -->
+      <section id="page-contact" class="page">
+        <button class="back-button" data-target="page-home">&larr; Home</button>
+        <h2>Contact Me</h2>
+        <form
+          id="contact-form"
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="honeypot-field">
+            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+          </p>
+
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+
+          <button type="submit">Send</button>
+        </form>
+        <p id="contact-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <button id="toggle-audio" aria-label="Toggle ambient audio"></button>
+
       <footer>
-        <p>&copy; 2024 Angel Smythe</p>
+        <p>&copy; 2026 Angel Smythe</p>
       </footer>
-    </div>
-  </main>
+    </main>
   </body>
 </html>

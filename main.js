@@ -2,7 +2,7 @@
 
 import space_sound from '/assets/Sound/space-ambience-56265.mp3';
 import "./style.css";
-import { fade } from "./script.js";
+import { showPage } from "./script.js";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -106,9 +106,9 @@ function init() {
   window.addEventListener("resize", onWindowResize);
 }
 function playHeartbeatAudio() {
-  let Avatar_audio = new Audio("assets/sound/HeartBeat_Loop_120bpm.mp3"); 
+  let Avatar_audio = new Audio("assets/sound/HeartBeat_Loop_120bpm.mp3");
   Avatar_audio.volume = 0.09;
-  Avatar_audio.play();
+  Avatar_audio.play().catch(() => {});
 }
 function planetclicker() {
   // assuming you have a planet mesh called 'planet'
@@ -156,8 +156,8 @@ function planetclicker() {
           controls.target.copy(camera.position);
           camera.position.set(29, 5, 16.5);
           updateControls = true;
-  
-          fade();
+
+          showPage("page-projects");
         })
         .start();
     }
@@ -179,8 +179,8 @@ function planetclicker() {
         .onComplete(() => {
           // transition to different page after camera animation is complete
           camera.position.set(30, 5, 9);
-          fade();
-    
+          showPage("page-contact");
+
         })
         .start();
     }
@@ -208,8 +208,8 @@ function planetclicker() {
           controls.target.copy(camera.position);
           camera.position.set(30, 5, 14);
           updateControls = true;
-    
-          fade();
+
+          showPage("page-about");
         })
         .start();
     }
@@ -223,19 +223,10 @@ function planetclicker() {
 }
 
 function homebutton() {
-  const homeButton = document.getElementById('home_button');
-  
-  homeButton.addEventListener('click', () => {
-  camera.position.set(0, 8, 12);
-  controls.target.copy(scene.position);
-  section2.classList.add("hidden");
-  setTimeout(function () {
-    section1.classList.remove("hidden");
-  }, 1000);
-
-
+  document.addEventListener('page:home', () => {
+    camera.position.set(0, 8, 12);
+    controls.target.copy(scene.position);
   });
-
 }
 homebutton();
 
@@ -256,22 +247,23 @@ Array(1000).fill().forEach(addStar);
 
 
 function music(){
-  let background_music = new Audio(space_sound); 
+  const background_music = new Audio(space_sound);
   background_music.volume = 0.10;
-  background_music.play();
   const toggleButton = document.getElementById('toggle-audio');
-  toggleButton.style.backgroundColor = 'white'
 
-  
+  function reflectState() {
+    toggleButton.style.backgroundColor = background_music.paused ? 'red' : 'white';
+  }
+
+  background_music.play().then(reflectState).catch(reflectState);
+  reflectState();
+
   toggleButton.addEventListener('click', () => {
     if (background_music.paused) {
-      background_music.play();
-      toggleButton.style.backgroundColor = 'white';
-
+      background_music.play().then(reflectState).catch(reflectState);
     } else {
       background_music.pause();
-      toggleButton.style.backgroundColor = 'red';
-
+      reflectState();
     }
   });
 }
