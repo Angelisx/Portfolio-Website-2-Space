@@ -250,15 +250,32 @@ function music(){
   const background_music = new Audio(space_sound);
   background_music.volume = 0.10;
   const toggleButton = document.getElementById('toggle-audio');
+  const audioHint = document.getElementById('audio-hint');
+  let hintTimeout;
 
   function reflectState() {
     toggleButton.style.backgroundColor = background_music.paused ? 'red' : 'white';
   }
 
-  background_music.play().then(reflectState).catch(reflectState);
+  function dismissHint() {
+    clearTimeout(hintTimeout);
+    audioHint.classList.remove('visible');
+  }
+
+  function maybeShowHint() {
+    if (!background_music.paused) return;
+    audioHint.classList.add('visible');
+    hintTimeout = setTimeout(dismissHint, 4500);
+  }
+
+  background_music.play().then(reflectState).catch(() => {
+    reflectState();
+    setTimeout(maybeShowHint, 800);
+  });
   reflectState();
 
   toggleButton.addEventListener('click', () => {
+    dismissHint();
     if (background_music.paused) {
       background_music.play().then(reflectState).catch(reflectState);
     } else {

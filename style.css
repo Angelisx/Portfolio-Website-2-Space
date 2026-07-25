@@ -281,6 +281,31 @@ header p {
   opacity: 0.85;
 }
 
+/* Audio hint */
+.audio-hint {
+  position: fixed;
+  bottom: 62px;
+  right: 8px;
+  z-index: 5;
+  pointer-events: none;
+  background: rgba(5, 6, 26, 0.75);
+  border: 1px solid rgba(0, 221, 235, 0.4);
+  color: #00ddeb;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.audio-hint.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Audio toggle */
 #toggle-audio {
   position: fixed;
