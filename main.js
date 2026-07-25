@@ -69,116 +69,68 @@ function playHeartbeatAudio() {
   Avatar_audio.volume = 0.09;
   Avatar_audio.play().catch(() => {});
 }
+// Maps each clickable 3D object to the nav section it should open, matching
+// the section ids already defined in index.html's <nav>.
+function getClickTargets() {
+  return [
+    { object: projectsPlanet, pageId: "page-projects" },
+    { object: contactPlanet, pageId: "page-contact" },
+    { object: AvatarBox, pageId: "page-about", onArrive: playHeartbeatAudio },
+  ];
+}
+
+// Flies the camera from wherever it currently is to a resting spot near
+// `target`, looking at it the whole way, instead of jump-cutting the camera
+// after the tween completes.
+function flyToObject(target, pageId, onArrive) {
+  updateControls = false;
+
+  const approachDir = camera.position.clone().sub(scene.position).normalize();
+  const restPosition = target.position.clone().add(approachDir.multiplyScalar(3));
+
+  const startPosition = camera.position.clone();
+  new TWEEN.Tween(startPosition)
+    .to(restPosition, 1800)
+    .easing(TWEEN.Easing.Quadratic.InOut)
+    .onUpdate(() => {
+      camera.position.copy(startPosition);
+      camera.lookAt(target.position);
+    })
+    .onComplete(() => {
+      controls.target.copy(target.position);
+      updateControls = true;
+      showPage(pageId);
+      if (onArrive) onArrive();
+    })
+    .start();
+}
+
 function planetclicker() {
-  // assuming you have a planet mesh called 'planet'
-
-  // create a raycaster object to detect clicks on the planet
   const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
 
-  // add event listener for mouse clicks
-  renderer.domElement.addEventListener("click", onMouseClick, false);
-
-  function onMouseClick(event) {
-    // calculate mouse position in normalized device coordinates
-    const mouse = {
-      x: (event.clientX / renderer.domElement.clientWidth) * 2 - 1,
-      y: -(event.clientY / renderer.domElement.clientHeight) * 2 + 1,
-    };
-    // update the picking ray with the camera and mouse position
-    raycaster.setFromCamera(mouse, camera);
-
-    // calculate objects intersecting the picking ray
-    const intersectsProjects = raycaster.intersectObjects([projectsPlanet]);
-    const intersectsContact = raycaster.intersectObjects([contactPlanet]);
-    const intersectsAvatar = raycaster.intersectObjects([AvatarBox]);
-
-
-    if (intersectsProjects.length > 0) {
-      // user clicked on the planet, animate camera to move towards the planet
-      console.log("it clicks");
-      updateControls = false;
-  
-      
-      const targetPosition = projectsPlanet.position;
-      const startPosition = camera.position;
-      const tween = new TWEEN.Tween(startPosition)
-        .to(targetPosition, 2000)
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .onUpdate(() => {
-          camera.position.copy(startPosition);
-          camera.lookAt(projectsPlanet.position);
-        })
-        .onComplete(() => {
-          // transition to different page after camera animation is complete
-  
-          camera.position.set(30, 5, 9);
-          controls.target.copy(camera.position);
-          camera.position.set(29, 5, 16.5);
-          updateControls = true;
-
-          showPage("page-projects");
-        })
-        .start();
-    }
-    if (intersectsContact.length > 0) {
-      // user clicked on the planet, animate camera to move towards the planet
-      console.log("it clicks");
-      
-      updateControls = false;
-        
-      const targetPosition = contactPlanet.position;
-      const startPosition = camera.position;
-      const tween = new TWEEN.Tween(startPosition)
-        .to(targetPosition, 2000)
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .onUpdate(() => {
-          camera.position.copy(startPosition);
-          camera.lookAt(contactPlanet.position);
-        })
-        .onComplete(() => {
-          // transition to different page after camera animation is complete
-          camera.position.set(30, 5, 9);
-          showPage("page-contact");
-
-        })
-        .start();
-    }
-    if (intersectsAvatar.length > 0) {
-      // user clicked on the planet, animate camera to move towards the planet
-      
-      playHeartbeatAudio();
-    
-      console.log("it clicks");
-      updateControls = false;
-      
-      const targetPosition = AvatarBox.position;
-      const startPosition = camera.position;
-      const tween = new TWEEN.Tween(startPosition)
-        .to(targetPosition, 2000)
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .onUpdate(() => {
-          camera.position.copy(startPosition);
-          camera.lookAt(AvatarBox.position);
-        })
-        .onComplete(() => {
-          // transition to different page after camera animation is complete
-    
-          camera.position.set(30, 5, 9);
-          controls.target.copy(camera.position);
-          camera.position.set(30, 5, 14);
-          updateControls = true;
-
-          showPage("page-about");
-        })
-        .start();
-    }
-    
-
-   
+  function pointerToMouse(event) {
+    mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+    mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
   }
-  
 
-  
+  function firstHit(event) {
+    pointerToMouse(event);
+    raycaster.setFromCamera(mouse, camera);
+    const targets = getClickTargets();
+    const hits = raycaster.intersectObjects(targets.map((t) => t.object));
+    if (hits.length === 0) return null;
+    return targets.find((t) => t.object === hits[0].object);
+  }
+
+  renderer.domElement.addEventListener("click", (event) => {
+    const hit = firstHit(event);
+    if (hit) flyToObject(hit.object, hit.pageId, hit.onArrive);
+  });
+
+  renderer.domElement.addEventListener("mousemove", (event) => {
+    renderer.domElement.style.cursor = firstHit(event) ? "pointer" : "";
+  });
 }
 
 function homebutton() {
@@ -254,22 +206,24 @@ function music(){
 music();
 
 
-//objects
-const transparentmaterial = new THREE.MeshPhongMaterial({
-  color: 0xFFFFFF,
-  transparent: true,
-  opacity: 0,
+//objects — small glowing "planets" that double as clickable nav shortcuts
+const geometry = new THREE.SphereGeometry(0.55, 32, 16);
+
+const projectsMaterial = new THREE.MeshStandardMaterial({
+  color: 0x00ddeb,
+  emissive: 0x00ddeb,
+  emissiveIntensity: 0.5,
+  roughness: 0.4,
 });
-const geometry = new THREE.SphereGeometry(0.4, 32, 16, true);
-const material = new THREE.MeshPhongMaterial({
-  color: 0x000000,
-  transparent: true,
-  opacity: 1,
-  side: THREE.DoubleSide,
+const contactMaterial = new THREE.MeshStandardMaterial({
+  color: 0xaf40ff,
+  emissive: 0xaf40ff,
+  emissiveIntensity: 0.5,
+  roughness: 0.4,
 });
 
-const projectsPlanet = new THREE.Mesh(geometry, material);
-const contactPlanet = new THREE.Mesh(geometry, transparentmaterial);
+const projectsPlanet = new THREE.Mesh(geometry, projectsMaterial);
+const contactPlanet = new THREE.Mesh(geometry, contactMaterial);
 
 projectsPlanet.position.set(3.9, 4.3, 0);
 contactPlanet.position.set(-3.87, 4.55, -.84);
@@ -319,7 +273,6 @@ function Cameraspin() {
 function animate() {
   requestAnimationFrame(animate);
   Cameraspin();
-  planetclicker();
   TWEEN.update();
 
   renderer.render(scene, camera);
@@ -330,6 +283,5 @@ window.addEventListener('load', function() {
   document.getElementById('bg').style.display = 'block';
 });
 
-
-
+planetclicker();
 animate();
