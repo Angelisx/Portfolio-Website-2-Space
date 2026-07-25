@@ -246,6 +246,9 @@ Array(1000).fill().forEach(addStar);
 
 
 
+const ICON_PLAYING = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9" fill="currentColor" stroke="none"/><path d="M16 8a5 5 0 0 1 0 8"/><path d="M19.5 5a9 9 0 0 1 0 14"/></svg>';
+const ICON_MUTED = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9" fill="currentColor" stroke="none"/><line x1="17" y1="9" x2="23" y2="15"/><line x1="23" y1="9" x2="17" y2="15"/></svg>';
+
 function music(){
   const background_music = new Audio(space_sound);
   background_music.volume = 0.10;
@@ -254,7 +257,11 @@ function music(){
   let hintTimeout;
 
   function reflectState() {
-    toggleButton.style.backgroundColor = background_music.paused ? 'red' : 'white';
+    const playing = !background_music.paused;
+    toggleButton.innerHTML = playing ? ICON_PLAYING : ICON_MUTED;
+    toggleButton.classList.toggle('is-playing', playing);
+    toggleButton.classList.toggle('is-muted', !playing);
+    toggleButton.setAttribute('aria-label', playing ? 'Mute ambient audio' : 'Play ambient audio');
   }
 
   function dismissHint() {
