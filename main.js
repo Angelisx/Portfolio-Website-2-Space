@@ -1,19 +1,13 @@
 
 
-import space_sound from '/assets/Sound/space-ambience-56265.mp3';
 import "./style.css";
 import { showPage } from "./script.js";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import Stats from "three/addons/libs/stats.module.js";
 import * as TWEEN from "@tweenjs/tween.js";
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
-let container, audio ;
-let camera, scene, raycaster, renderer, delta;
+let camera, scene, renderer;
 let updateControls = true;
 
 //3d model
@@ -37,41 +31,6 @@ spaceguy.load(
     console.error(error);
   }
 );
-
-// const blackholeloader = new GLTFLoader();
-// let blackhole;
-// blackholeloader.load(
-//   "assets/blackhole/blackhole.gltf",
-//   function (gltf) {
-//     blackhole = gltf.scene;
-//     scene.add(blackhole);
-//     // blackhole.position.set(31, 5, 9);
-//     blackhole.scale.set(3, 3, 2);
-//     blackhole.rotation.set(0,0,10);
-
-//     const boundingBox = new THREE.Box3().setFromObject(blackhole);
-//     const center = boundingBox.getCenter(new THREE.Vector3());
-  
-//     // Set pivot point to the center of the bounding box
-//     blackhole.position.set(-center.x, -center.y, -center.z);
-  
-//     const tiltAngle = 23.5 * (Math.PI / 180);
-//     blackhole.rotation.x = tiltAngle;
-
-
-//     blackhole.traverse(function(child) {
-//       if (child.isMesh) {
-//         child.material.opacity = 1;
-//         child.material.transparent = true;
-//         }
-//     });
-//   },
-//   undefined,
-//   function (error) {
-//     console.error(error);
-//   }
-// );
-
 
 init();
 function init() {
@@ -106,7 +65,7 @@ function init() {
   window.addEventListener("resize", onWindowResize);
 }
 function playHeartbeatAudio() {
-  let Avatar_audio = new Audio("assets/sound/HeartBeat_Loop_120bpm.mp3");
+  let Avatar_audio = new Audio("assets/Sound/HeartBeat_Loop_120bpm.mp3");
   Avatar_audio.volume = 0.09;
   Avatar_audio.play().catch(() => {});
 }
@@ -250,7 +209,7 @@ const ICON_PLAYING = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
 const ICON_MUTED = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9" fill="currentColor" stroke="none"/><line x1="17" y1="9" x2="23" y2="15"/><line x1="23" y1="9" x2="17" y2="15"/></svg>';
 
 function music(){
-  const background_music = new Audio(space_sound);
+  const background_music = new Audio('/assets/Sound/space-ambience-56265.mp3');
   background_music.volume = 0.10;
   const toggleButton = document.getElementById('toggle-audio');
   const audioHint = document.getElementById('audio-hint');
@@ -344,13 +303,6 @@ pointlight.position.set(5, 5, 5);
 const light = new THREE.AmbientLight(0x404040); // soft white light
 scene.add(pointlight);
 
-//helpers
-function helpers() {
-  // const lighthelper = new THREE.PointLightHelper(pointlight);
-  const gridHelper = new THREE.GridHelper(200, 50);
-  scene.add(gridHelper);
-}
-// //window resize
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -366,38 +318,18 @@ function Cameraspin() {
 }
 function animate() {
   requestAnimationFrame(animate);
-  setTimeout(Cameraspin, 2000);
   Cameraspin();
   planetclicker();
   TWEEN.update();
-  // mixer.update(0.01);
-
-  // Rotate the model
-  // blackhole.rotation.y += 0.01;
-  // if (blackhole) {
-  //   blackhole.rotation.y += 3;
-  //   blackhole.rotation.z += 3;
-
-
-
-
-  // }
-
 
   renderer.render(scene, camera);
 }
 
 window.addEventListener('load', function() {
-  // Add a delay of 1000 milliseconds (1 second) before hiding the loading screen
-  setTimeout(function() {
-    // Hide the loading screen after the delay
-    document.getElementById('loading-screen').style.display = 'none';
-    // Show the background (assuming it has the ID 'bg')
-    document.getElementById('bg').style.display = 'block';
-  }, 1000); // Adjust the delay time as needed
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('bg').style.display = 'block';
 });
 
 
 
-// helpers();
 animate();

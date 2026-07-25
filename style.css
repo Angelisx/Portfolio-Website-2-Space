@@ -3,7 +3,7 @@
 }
 
 html {
-  cursor: url('assets/images/cursor-hover.svg'), auto;
+  cursor: url('/assets/images/cursor-hover.svg'), auto;
 }
 
 body {
