@@ -129,6 +129,7 @@ nav a.active {
 
 #page-about.active,
 #page-projects.active,
+#page-certificates.active,
 #page-contact.active {
   pointer-events: all;
 }
@@ -232,6 +233,144 @@ header p {
   margin: 0;
   opacity: 0.85;
   font-size: 0.95rem;
+}
+
+/* Certificates */
+.certificate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.certificate-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font: inherit;
+  background: rgba(5, 6, 26, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 0.75rem 0.75rem 1.25rem;
+  color: aliceblue;
+  cursor: pointer;
+  transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+}
+
+.certificate-card:hover,
+.certificate-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: #00ddeb;
+  background: rgba(5, 6, 26, 0.85);
+  outline: none;
+}
+
+.certificate-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 0.9rem;
+}
+
+.certificate-card h3 {
+  margin: 0 0.5rem 0.35rem;
+  font-size: 1.05rem;
+  color: #00ddeb;
+}
+
+.certificate-card p {
+  margin: 0 0.5rem;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.certificate-lightbox {
+  width: min(92vw, 900px);
+  max-height: 92vh;
+  padding: 1rem;
+  border: 1px solid rgba(0, 221, 235, 0.4);
+  border-radius: 12px;
+  background: rgba(5, 6, 26, 0.95);
+  color: aliceblue;
+  box-shadow: rgba(151, 65, 252, 0.25) 0 20px 50px -10px;
+}
+
+.certificate-lightbox[open] {
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 300ms ease-out;
+}
+
+.certificate-lightbox::backdrop {
+  background: rgba(2, 3, 12, 0.8);
+  backdrop-filter: blur(3px);
+}
+
+.lightbox-image {
+  width: 100%;
+  min-height: 0;
+  max-height: 72vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.lightbox-info {
+  padding: 0.9rem 0.25rem 0.25rem;
+}
+
+.lightbox-info h3 {
+  margin: 0 0 0.3rem;
+  color: #00ddeb;
+}
+
+.lightbox-meta {
+  margin: 0 0 0.6rem;
+  opacity: 0.8;
+}
+
+.lightbox-verify {
+  color: aliceblue;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-bottom: 1px solid #00ddeb;
+}
+
+.lightbox-verify:hover {
+  color: #00ddeb;
+}
+
+.lightbox-verify[hidden] {
+  display: none;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(5, 6, 26, 0.8);
+  color: aliceblue;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightbox-close:focus-visible {
+  outline: 2px solid #00ddeb;
+  outline-offset: 2px;
+}
+
+.lightbox-close:hover {
+  border-color: #00ddeb;
+  color: #00ddeb;
 }
 
 /* Contact form */
@@ -377,11 +516,22 @@ footer {
 
 @media (max-width: 600px) {
   nav ul {
-    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 0.9rem;
   }
 
   nav a {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  .certificate-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .certificate-lightbox {
+    width: 96vw;
+    padding: 0.6rem;
   }
 
   #contact-form,

@@ -28,6 +28,7 @@
           <li><a href="#home" data-target="page-home" class="active">Home</a></li>
           <li><a href="#about" data-target="page-about">About</a></li>
           <li><a href="#projects" data-target="page-projects">Projects</a></li>
+          <li><a href="#certificates" data-target="page-certificates">Certificates</a></li>
           <li><a href="#contact" data-target="page-contact">Contact</a></li>
         </ul>
       </nav>
@@ -97,6 +98,24 @@
           </a>
         </div>
       </section>
+
+      <!-- Certificates section (cards are rendered from certificates.js) -->
+      <section id="page-certificates" class="page">
+        <button class="back-button" data-target="page-home">&larr; Home</button>
+        <h2>Certificates</h2>
+        <div id="certificate-grid" class="certificate-grid"></div>
+      </section>
+
+      <!-- Certificate lightbox -->
+      <dialog id="certificate-lightbox" class="certificate-lightbox" aria-labelledby="lightbox-title">
+        <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
+        <img class="lightbox-image" src="" alt="" />
+        <div class="lightbox-info">
+          <h3 id="lightbox-title"></h3>
+          <p class="lightbox-meta"></p>
+          <a class="lightbox-verify" href="#" target="_blank" rel="noopener noreferrer">Verify credential &#8599;</a>
+        </div>
+      </dialog>
 
       <!-- Contact section -->
       <section id="page-contact" class="page">
