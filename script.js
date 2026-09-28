@@ -1,4 +1,5 @@
 import { certificates } from "./certificates.js";
+import { projects } from "./projects.js";
 
 function encodeForm(data) {
   return Object.keys(data)
@@ -26,6 +27,52 @@ function initNavigation() {
       event.preventDefault();
       showPage(el.dataset.target);
     });
+  });
+}
+
+function initProjects() {
+  const grid = document.getElementById("project-grid");
+  if (!grid) return;
+
+  projects.forEach((project) => {
+    const card = document.createElement("article");
+    card.className = "project-card";
+
+    const status = document.createElement("span");
+    status.className = `project-status ${project.status.toLowerCase()}`;
+    status.textContent = project.status;
+
+    const title = document.createElement("h3");
+    title.textContent = project.title;
+
+    const blurb = document.createElement("p");
+    blurb.textContent = project.blurb;
+
+    const tags = document.createElement("ul");
+    tags.className = "project-tags";
+    project.tags.forEach((tag) => {
+      const item = document.createElement("li");
+      item.textContent = tag;
+      tags.append(item);
+    });
+
+    card.append(status, title, blurb, tags);
+
+    if (project.links && project.links.length) {
+      const links = document.createElement("div");
+      links.className = "project-links";
+      project.links.forEach(({ label, url }) => {
+        const link = document.createElement("a");
+        link.href = url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = `${label} ↗`;
+        links.append(link);
+      });
+      card.append(links);
+    }
+
+    grid.append(card);
   });
 }
 
@@ -107,6 +154,7 @@ function initContactForm() {
 
 document.addEventListener("DOMContentLoaded", () => {
   initNavigation();
+  initProjects();
   initCertificates();
   initContactForm();
 });
