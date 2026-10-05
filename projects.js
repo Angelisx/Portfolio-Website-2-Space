@@ -16,12 +16,14 @@ export const projects = [
     blurb: "A personal life dashboard PWA that syncs with Obsidian and Notion.",
     tags: ["Vite", "TypeScript", "Supabase (RLS)", "Netlify Functions", "PWA"],
     status: "Live",
+    links: [{ label: "Live site", url: "https://angel-dashboard-v2.netlify.app" }],
   },
   {
     title: "Ant Farm",
     blurb: "A live view of AI coding agents across repos, drawn as an ant colony.",
     tags: ["Vite", "Supabase Realtime", "JavaScript"],
     status: "Live",
+    links: [{ label: "Live site", url: "https://ant-farm-angelisx.netlify.app" }],
   },
   {
     title: "Tax PDF Combiner",
@@ -34,6 +36,7 @@ export const projects = [
     blurb: "A pre-BMT prep checklist and timeline for getting ready to report.",
     tags: ["Static site", "Netlify", "JavaScript"],
     status: "Live",
+    links: [{ label: "Live site", url: "https://airforce-minmax.netlify.app" }],
   },
   {
     title: "Murphy's Law",
