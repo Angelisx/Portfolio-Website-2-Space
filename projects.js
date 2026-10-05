@@ -41,4 +41,11 @@ export const projects = [
     tags: ["Planning", "Stress-testing"],
     status: "Building",
   },
+  {
+    title: "Real Estate Underwriter",
+    blurb: "A deterministic rental-property underwriting calculator: cap rate, cash-on-cash, DSCR, IRR, multi-year projections, and reverse target solvers, with auto rent/tax lookup.",
+    tags: ["Vite", "React", "TypeScript", "Netlify Functions", "Recharts"],
+    status: "Live",
+    links: [{ label: "Live site", url: "https://re-underwriter-sora.netlify.app" }],
+  },
 ];
