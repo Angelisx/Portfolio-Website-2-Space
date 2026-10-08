@@ -1,4 +1,4 @@
-import { certificates } from "./certificates.js";
+import { certificates, achievements } from "./certificates.js";
 import { projects } from "./projects.js";
 
 function encodeForm(data) {
@@ -76,6 +76,27 @@ function initProjects() {
   });
 }
 
+function initAchievementStats() {
+  const strip = document.getElementById("achievement-stats");
+  if (!strip || !achievements || !achievements.length) return;
+
+  achievements.forEach((stat) => {
+    const item = document.createElement("div");
+    item.className = "achievement-stat";
+
+    const value = document.createElement("span");
+    value.className = "achievement-value";
+    value.textContent = stat.value;
+
+    const label = document.createElement("span");
+    label.className = "achievement-label";
+    label.textContent = stat.label;
+
+    item.append(value, label);
+    strip.append(item);
+  });
+}
+
 function initCertificates() {
   const grid = document.getElementById("certificate-grid");
   const lightbox = document.getElementById("certificate-lightbox");
@@ -97,24 +118,50 @@ function initCertificates() {
   }
 
   certificates.forEach((cert) => {
+    const isUpcoming = cert.upcoming || !cert.image;
+
     const card = document.createElement("button");
     card.type = "button";
-    card.className = "certificate-card";
-    card.setAttribute("aria-label", `View ${cert.title} certificate`);
+    card.className = isUpcoming ? "certificate-card certificate-card--upcoming" : "certificate-card";
+    card.setAttribute(
+      "aria-label",
+      isUpcoming ? `${cert.title} — upcoming` : `View ${cert.title} certificate`
+    );
 
-    const img = document.createElement("img");
-    img.src = cert.image;
-    img.alt = "";
-    img.loading = "lazy";
+    if (isUpcoming) {
+      const placeholder = document.createElement("div");
+      placeholder.className = "certificate-placeholder";
+      placeholder.textContent = "In progress";
 
-    const title = document.createElement("h3");
-    title.textContent = cert.title;
+      const badge = document.createElement("span");
+      badge.className = "certificate-badge";
+      badge.textContent = "Upcoming";
+      placeholder.append(badge);
 
-    const meta = document.createElement("p");
-    meta.textContent = `${cert.issuer} · ${cert.date}`;
+      const title = document.createElement("h3");
+      title.textContent = cert.title;
 
-    card.append(img, title, meta);
-    card.addEventListener("click", () => openLightbox(cert));
+      const meta = document.createElement("p");
+      meta.textContent = `${cert.issuer} · ${cert.date}`;
+
+      card.append(placeholder, title, meta);
+      card.disabled = true;
+    } else {
+      const img = document.createElement("img");
+      img.src = cert.image;
+      img.alt = "";
+      img.loading = "lazy";
+
+      const title = document.createElement("h3");
+      title.textContent = cert.title;
+
+      const meta = document.createElement("p");
+      meta.textContent = `${cert.issuer} · ${cert.date}`;
+
+      card.append(img, title, meta);
+      card.addEventListener("click", () => openLightbox(cert));
+    }
+
     grid.append(card);
   });
 
@@ -156,6 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initNavigation();
   initProjects();
   initCertificates();
+  initAchievementStats();
   initContactForm();
 });
 
